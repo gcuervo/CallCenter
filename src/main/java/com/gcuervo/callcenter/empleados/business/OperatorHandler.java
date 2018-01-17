@@ -14,10 +14,10 @@ public class OperatorHandler implements EmployeeChain {
 	private Logger logger = Logger.getLogger(OperatorHandler.class.getName());
 
 	public OperatorHandler(int cantOp) {
-		int index = 0;
+		int index = 1;
 		operators = new ArrayList<Operator>();
-		while (index < cantOp) {
-			operators.add(new Operator("Operator " + String.valueOf(index++)));
+		while (index <= cantOp) {
+			operators.add(new Operator("Operador " + String.valueOf(index++)));
 		}
 	}
 

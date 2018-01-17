@@ -14,9 +14,9 @@ public class SupervisorHandler implements EmployeeChain {
 	private Logger logger = Logger.getLogger(SupervisorHandler.class.getName());
 
 	public SupervisorHandler(int cantSup) {
-		int index = 0;
+		int index = 1;
 		supervisors = new ArrayList<Supervisor>();
-		while (index < cantSup) {
+		while (index <= cantSup) {
 			supervisors.add(new Supervisor("Supervisor " + String.valueOf(index++)));
 		}
 	}

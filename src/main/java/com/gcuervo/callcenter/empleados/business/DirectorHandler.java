@@ -14,9 +14,9 @@ public class DirectorHandler implements EmployeeChain {
 	private Logger logger = Logger.getLogger(DirectorHandler.class.getName());
 
 	public DirectorHandler(int cantDir) {
-		int index = 0;
+		int index = 1;
 		directors = new ArrayList<Director>();
-		while (index < cantDir) {
+		while (index <= cantDir) {
 			directors.add(new Director("Director " + String.valueOf(index++)));
 		}
 	}

@@ -8,7 +8,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 import com.gcuervo.callcenter.call.Call;
-import com.gcuervo.callcenter.dispatcher.Dispatcher;
 
 public abstract class Employee {
 	private String name;
@@ -34,8 +33,6 @@ public abstract class Employee {
 		isAvailable = Boolean.TRUE;
 	}
 
-	public void getCall(Call call) {
-	}
 
 	public String getName() {
 		return name;
