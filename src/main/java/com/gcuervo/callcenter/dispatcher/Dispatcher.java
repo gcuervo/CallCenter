@@ -1,6 +1,5 @@
 package com.gcuervo.callcenter.dispatcher;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
@@ -45,12 +44,15 @@ public class Dispatcher {
 	}
 
 	public void getToWork() {
-		Iterator<Call> it = receiveCalls.iterator();
-
-		while (it.hasNext()) {
+	//	Iterator<Call> it = receiveCalls.iterator();
+		while(receiveCalls.size()>0){
+			Call call = receiveCalls.poll();
+			callHandler(call);
+		}
+		/*while (it.hasNext()) {
 			callHandler(it.next());
 			it.remove();
-		}
+		}*/
 	}
 
 	public void addCall(Call call) {

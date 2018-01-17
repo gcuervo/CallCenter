@@ -4,6 +4,7 @@ import static java.lang.Thread.sleep;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 import com.gcuervo.callcenter.call.Call;
@@ -23,8 +24,9 @@ public abstract class Employee {
 
 	public void answerCall(Call call) {
 		try {
-			logger.info("Llamada: " + call.getName());
-			sleep(call.getDuration());
+			logger.info("Comienzo de llamada: " + call.getName());
+			sleep(TimeUnit.SECONDS.toMillis(call.getDuration()));
+			logger.info("Fin de llamada: " + call.getName());
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

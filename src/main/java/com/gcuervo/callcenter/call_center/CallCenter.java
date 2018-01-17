@@ -10,16 +10,20 @@ import com.gcuervo.callcenter.dispatcher.Dispatcher;
  * Hello world!
  */
 public class CallCenter {
-	/*
-	 * private Dispatcher dispatcher; private EmployeeBusiness employeeBusiness;
-	 * 
-	 * 
-	 * public void employ(int cantDir,int cantSup,int cantOp){
-	 * employeeBusiness.employ(cantDir, cantSup, cantOp); }
-	 * 
-	 * 
-	 * public void startWork(List<Call> calls){ dispatcher.getToWork(); }
-	 */
+	
+	 private Dispatcher dispatcher;
+	 
+	 
+	 public void employ(int cantDir,int cantSup,int cantOp){
+		 dispatcher.employ(cantDir, cantSup, cantOp); 
+	 }
+	 
+	 public void addCalls(List<Call> calls){
+		 dispatcher.addCalls(calls);
+	 }
+	 
+	  public void startWork(List<Call> calls){ dispatcher.getToWork(); }
+	 
 	/**
 	 * @param args
 	 */
@@ -30,15 +34,15 @@ public class CallCenter {
 		Dispatcher dispatcher = new Dispatcher(10);
 
 		List<Call> calls = new ArrayList<Call>();
-		calls.add(new Call(7l, "1"));
+		calls.add(new Call(17l, "1"));
 		calls.add(new Call(6l, "2"));
 		calls.add(new Call(8l, "3"));
-		calls.add(new Call(10l, "4"));
+		calls.add(new Call(1l, "4"));
 		calls.add(new Call(5l, "5"));
 		calls.add(new Call(1l, "6"));
 		calls.add(new Call(1l, "7"));
 		calls.add(new Call(5l, "8"));
-		calls.add(new Call(50l, "9"));
+		calls.add(new Call(5l, "9"));
 		calls.add(new Call(5l, "10"));
 		calls.add(new Call(5l, "11"));
 		calls.add(new Call(8l, "12"));
@@ -46,7 +50,7 @@ public class CallCenter {
 		calls.add(new Call(5l, "14"));
 		calls.add(new Call(6l, "15"));
 		calls.add(new Call(7l, "16"));
-		calls.add(new Call(10l, "17"));
+		calls.add(new Call(1l, "17"));
 		calls.add(new Call(5l, "18"));
 		dispatcher.addCalls(calls);
 		dispatcher.employ(1, 2, 3);
