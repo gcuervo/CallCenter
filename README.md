@@ -1,8 +1,8 @@
 # Call Center
 
-### Solución cuando no existe empleado libre
+### Solución cuando no existe empleado disponible
 
-Si no existe un empleado libre, la solución por la que se opto fue crear una cola de espera para las llamadas. Estas llamadas son transferidas al primer empleado que se libere.
+En el caso de que no exista un empleado disponible para atender un llamado, la solución por la que se opto fue la de crear una cola de espera para estas llamadas. Estas son transferidas al primer empleado que se libere.
 
 ### Design patterns
 
