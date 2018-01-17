@@ -28,11 +28,6 @@ public class CallCenterTest extends TestCase {
 		testCalls = new ArrayList<Call>();
 	}
 	
-	@Before
-	public void beforeEachTest() throws Exception {
-		testCalls = new ArrayList<Call>();
-	}
-
 	/*
 	 * Test con diez llamadas concurrentes y diez empleados disponibles.
 	 * */
@@ -62,37 +57,7 @@ public class CallCenterTest extends TestCase {
 		Assert.assertEquals(testCalls.get(9).getEmployee(), "Director 1");
 	}
 	
-	/*
-	 * Test con diez llamadas concurrentes con diez empleados disponibles
-	 * */
 
-	@Test
-	public void waitingCallsTest() throws Exception {
-		int threads = 10;
-		CallCenter callCenter = new CallCenter(threads);
-
-		for (int i = 0; i < 13; i++) {
-			testCalls.add(new Call("Llamada " + i));
-		}
-
-		// callCenter.addCalls(testCalls);
-		callCenter.employ(1, 2, 7);
-		testCalls = callCenter.startWork(testCalls);
-		sleep(4000);
-		Assert.assertEquals(testCalls.get(0).getEmployee(), "Operador 1");
-		Assert.assertEquals(testCalls.get(1).getEmployee(), "Operador 2");
-		Assert.assertEquals(testCalls.get(2).getEmployee(), "Operador 3");
-		Assert.assertEquals(testCalls.get(3).getEmployee(), "Operador 4");
-		Assert.assertEquals(testCalls.get(4).getEmployee(), "Operador 5");
-		Assert.assertEquals(testCalls.get(5).getEmployee(), "Operador 6");
-		Assert.assertEquals(testCalls.get(6).getEmployee(), "Operador 7");
-		Assert.assertEquals(testCalls.get(7).getEmployee(), "Supervisor 1");
-		Assert.assertEquals(testCalls.get(8).getEmployee(), "Supervisor 2");
-		Assert.assertEquals(testCalls.get(9).getEmployee(), "Director 1");
-		Assert.assertEquals(testCalls.get(10).getEmployee(), "Operador 1");
-		Assert.assertEquals(testCalls.get(11).getEmployee(), "Operador 2");
-		Assert.assertEquals(testCalls.get(12).getEmployee(), "Operador 3");
-	}
 
 	
 }
