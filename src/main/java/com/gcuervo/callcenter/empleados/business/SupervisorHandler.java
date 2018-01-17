@@ -32,7 +32,7 @@ public class SupervisorHandler implements EmployeeChain {
 
 	@Override
 	public synchronized Employee getAvailableEmployee() {
-		Supervisor supervisor = null;
+		Employee supervisor = null;
 		Boolean found = false;
 		for (int i = 0; i < supervisors.size() && !found; i++) {
 			Supervisor sup = supervisors.get(i);
@@ -44,7 +44,7 @@ public class SupervisorHandler implements EmployeeChain {
 		}
 		if (supervisor == null) {
 			logger.info(ErrorConstants.NO_AVAILABLE_SUPERVISOR);
-			nextEmployeeHandler.getAvailableEmployee();
+			supervisor = nextEmployeeHandler.getAvailableEmployee();
 		}
 		return supervisor;
 	}

@@ -24,7 +24,7 @@ public abstract class Employee {
 
 	public void answerCall(Call call) {
 		try {
-			logger.info("Comienzo de llamada: " + call.getName());
+			logger.info("Comienzo de llamada: " + call.getName() + " - " + name);
 			sleep(TimeUnit.SECONDS.toMillis(call.getDuration()));
 			logger.info("Fin de llamada: " + call.getName());
 		} catch (InterruptedException e) {

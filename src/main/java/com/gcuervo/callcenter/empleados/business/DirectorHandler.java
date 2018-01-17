@@ -32,7 +32,7 @@ public class DirectorHandler implements EmployeeChain {
 
 	@Override
 	public synchronized Employee getAvailableEmployee() {
-		Director director = null;
+		Employee director = null;
 		Boolean found = false;
 		for (int i = 0; i < directors.size() && !found; i++) {
 			Director dir = directors.get(i);

@@ -32,7 +32,7 @@ public class OperatorHandler implements EmployeeChain {
 	
 	@Override
 	public synchronized Employee getAvailableEmployee() {
-		Operator operator = null;
+		Employee operator = null;
 		Boolean found = false;
 		for (int i = 0; i < operators.size() && !found; i++) {
 			Operator op = operators.get(i);
@@ -44,7 +44,7 @@ public class OperatorHandler implements EmployeeChain {
 		}
 		if (operator == null) {
 			logger.info(ErrorConstants.NO_AVAILABLE_OPERATOR);
-			nextEmployeeHandler.getAvailableEmployee();
+			operator = nextEmployeeHandler.getAvailableEmployee();
 		}
 		return operator;
 	}
