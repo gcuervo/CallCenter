@@ -20,23 +20,34 @@ public class CallCenter {
 	 * 
 	 * public void startWork(List<Call> calls){ dispatcher.getToWork(); }
 	 */
+	/**
+	 * @param args
+	 */
+	/**
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		Dispatcher dispatcher = new Dispatcher(10);
 
 		List<Call> calls = new ArrayList<Call>();
-		calls.add(new Call(7l,"1"));
-		calls.add(new Call(6l,"2"));
-		calls.add(new Call(8l,"3"));
-		calls.add(new Call(8l,"4"));
-		calls.add(new Call(5l,"5"));
-		calls.add(new Call(1l,"6"));
-		calls.add(new Call(1l,"7"));
-		calls.add(new Call(5l,"8"));
-		calls.add(new Call(50l,"9"));
-		calls.add(new Call(5l,"10"));
-		calls.add(new Call(5l,"11"));
-		calls.add(new Call(5l,"12"));
-		calls.add(new Call(5l,"13"));
+		calls.add(new Call(7l, "1"));
+		calls.add(new Call(6l, "2"));
+		calls.add(new Call(8l, "3"));
+		calls.add(new Call(10l, "4"));
+		calls.add(new Call(5l, "5"));
+		calls.add(new Call(1l, "6"));
+		calls.add(new Call(1l, "7"));
+		calls.add(new Call(5l, "8"));
+		calls.add(new Call(50l, "9"));
+		calls.add(new Call(5l, "10"));
+		calls.add(new Call(5l, "11"));
+		calls.add(new Call(8l, "12"));
+		calls.add(new Call(9l, "13"));
+		calls.add(new Call(5l, "14"));
+		calls.add(new Call(6l, "15"));
+		calls.add(new Call(7l, "16"));
+		calls.add(new Call(10l, "17"));
+		calls.add(new Call(5l, "18"));
 		dispatcher.addCalls(calls);
 		dispatcher.employ(1, 2, 3);
 		dispatcher.getToWork();

@@ -4,13 +4,16 @@ import static java.lang.Thread.sleep;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import com.gcuervo.callcenter.call.Call;
+import com.gcuervo.callcenter.dispatcher.Dispatcher;
 
 public abstract class Employee {
 	private String name;
 	private Boolean isAvailable;
 	private List<Call> answeredCalls;
+	private Logger logger = Logger.getLogger(Employee.class.getName());
 
 	public Employee(String name) {
 		this.name = name;
@@ -20,7 +23,7 @@ public abstract class Employee {
 
 	public void answerCall(Call call) {
 		try {
-			System.out.println(call.getName());
+			logger.info("Llamada: " + call.getName());
 			sleep(call.getDuration());
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -40,7 +43,7 @@ public abstract class Employee {
 		this.name = name;
 	}
 
-	public Boolean getisAvailable() {
+	public Boolean isAvailable() {
 		return isAvailable;
 	}
 

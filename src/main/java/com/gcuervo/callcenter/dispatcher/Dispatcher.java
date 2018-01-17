@@ -12,28 +12,32 @@ import java.util.logging.Logger;
 
 import com.gcuervo.callcenter.call.Call;
 import com.gcuervo.callcenter.empleados.Employee;
-import com.gcuervo.callcenter.empleados.business.EmployeeBusiness;
-import com.gcuervo.callcenter.exceptions.CallCenterException;
+import com.gcuervo.callcenter.empleados.business.DirectorHandler;
+import com.gcuervo.callcenter.empleados.business.EmployeeChain;
+import com.gcuervo.callcenter.empleados.business.OperatorHandler;
 
 public class Dispatcher {
 
 	private ExecutorService executor;
 	protected ConcurrentLinkedQueue<Call> waitingCalls;
-	private EmployeeBusiness employeeBusiness;
+	// private EmployeeBusiness employeeBusiness;
+	private EmployeeChain employeeChain;
 	private ConcurrentLinkedQueue<Call> receiveCalls;
 	private Logger logger = Logger.getLogger(Dispatcher.class.getName());
-
-	// private Logger logger = LoggerFactory.getLogger(Dispatcher.class);
 
 	public Dispatcher(Integer threads) {
 		executor = Executors.newFixedThreadPool(threads);
 		waitingCalls = new ConcurrentLinkedQueue<Call>();
-		employeeBusiness = new EmployeeBusiness();
+		// employeeBusiness = new EmployeeBusiness();
+
 		receiveCalls = new ConcurrentLinkedQueue<Call>();
 	}
 
 	public void employ(int cantDir, int cantSup, int cantOp) {
-		employeeBusiness.employ(cantDir, cantSup, cantOp);
+		// employeeBusiness.employ(cantDir, cantSup, cantOp);
+		employeeChain = new OperatorHandler(cantOp);
+		employeeChain.addNext(new OperatorHandler(cantOp));
+		employeeChain.addNext(new DirectorHandler(cantDir));
 	}
 
 	public void addCalls(List<Call> calls) {
@@ -47,10 +51,6 @@ public class Dispatcher {
 			callHandler(it.next());
 			it.remove();
 		}
-
-		/*
-		 * for (Call call : receiveCalls) { callHandler(call); }
-		 */
 	}
 
 	public void addCall(Call call) {
@@ -60,37 +60,33 @@ public class Dispatcher {
 	public void dispatchCall(final Employee employee, final Call call) {
 		executor.execute(new Runnable() {
 			public void run() {
-				System.out.println("entro ");
 				employee.answerCall(call);
 				waitingCalls();
 			}
 		});
 	}
 
-	private  void waitingCalls() {
-		System.out.println("waitingCalls: " + waitingCalls.size());
-		System.out.println("receiveCalls: " + receiveCalls.size());
+	private synchronized void waitingCalls() {
+		// System.out.println("waitingCalls: " + waitingCalls.size());
+		// System.out.println("receiveCalls: " + receiveCalls.size());
 		if (waitingCalls.isEmpty() && receiveCalls.isEmpty()) {
+			logger.info("Fin del trabajo!");
 			executor.shutdown();
 		} else if (!waitingCalls.isEmpty()) {
-			 Call call = waitingCalls.remove();
-			//Call call = removeWaitingCalls();
+			Call call = waitingCalls.remove();
+			// Call call = removeWaitingCalls();
+			logger.info("Tomando llamada que se encontraba espera..");
 			callHandler(call);
 		}
 	}
 
-	/*private synchronized Call removeWaitingCalls() {
-		return waitingCalls.remove();
-	}*/
-
 	public void callHandler(Call call) {
-		try {
-			Employee employee = employeeBusiness.getAvailableEmployee();
-			dispatchCall(employee, call);
-		} catch (CallCenterException ex) {
-			logger.info(ex.getMessage());
+		Employee employee = employeeChain.getAvailableEmployee();
+		if (employee == null) {
 			System.out.println("Adding waiting call");
 			waitingCalls.add(call);
+		} else {
+			dispatchCall(employee, call);
 		}
 	}
 }

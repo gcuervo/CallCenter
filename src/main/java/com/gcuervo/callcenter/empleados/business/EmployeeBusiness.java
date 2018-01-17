@@ -41,12 +41,12 @@ public class EmployeeBusiness {
 		}
 	}
 
-	public Operator getAvailableOperator() throws CallCenterException {
+	public synchronized Operator getAvailableOperator() throws CallCenterException {
 		Operator operator = null;
 		Boolean found = false;
 		for (int i = 0; i < operators.size() && !found; i++) {
 			Operator op = operators.get(i);
-			if (op.getisAvailable()) {
+			if (op.isAvailable()) {
 				operator = op;
 				found = true;
 				op.setisAvailable(Boolean.FALSE);
@@ -63,7 +63,7 @@ public class EmployeeBusiness {
 		Boolean found = false;
 		for (int i = 0; i < supervisors.size() && !found; i++) {
 			Supervisor sup = supervisors.get(i);
-			if (sup.getisAvailable()) {
+			if (sup.isAvailable()) {
 				supervisor = sup;
 				found = true;
 				sup.setisAvailable(Boolean.FALSE);
@@ -80,7 +80,7 @@ public class EmployeeBusiness {
 		Boolean found = false;
 		for (int i = 0; i < directors.size() && !found; i++) {
 			Director dir = directors.get(i);
-			if (dir.getisAvailable()) {
+			if (dir.isAvailable()) {
 				director = dir;
 				found = true;
 				dir.setisAvailable(Boolean.FALSE);
