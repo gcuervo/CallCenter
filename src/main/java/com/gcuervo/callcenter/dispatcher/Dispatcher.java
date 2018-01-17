@@ -1,12 +1,13 @@
 package com.gcuervo.callcenter.dispatcher;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 import com.gcuervo.callcenter.call.Call;
 import com.gcuervo.callcenter.empleados.Employee;
@@ -20,7 +21,7 @@ public class Dispatcher {
 	private EmployeeBusiness employeeBusiness;
 	private ConcurrentLinkedQueue<Call> receiveCalls;
 
-	private Logger logger = LoggerFactory.getLogger(Dispatcher.class);
+	// private Logger logger = LoggerFactory.getLogger(Dispatcher.class);
 
 	public Dispatcher(Integer threads) {
 		executor = Executors.newFixedThreadPool(threads);
@@ -38,9 +39,16 @@ public class Dispatcher {
 	}
 
 	public void getToWork() {
-		for (Call call : receiveCalls) {
-			callHandler(call);
+		Iterator<Call> it = receiveCalls.iterator();
+
+		while (it.hasNext()) {
+			callHandler(it.next());
+			it.remove();
 		}
+
+		/*
+		 * for (Call call : receiveCalls) { callHandler(call); }
+		 */
 	}
 
 	public void addCall(Call call) {
@@ -58,13 +66,20 @@ public class Dispatcher {
 	}
 
 	private void waitingCalls() {
-		if (waitingCalls.isEmpty()) {
+		System.out.println("waitingCalls: " + waitingCalls.size());
+		System.out.println("receiveCalls: " + receiveCalls.size());
+		if (waitingCalls.isEmpty() && receiveCalls.isEmpty()) {
 			executor.shutdown();
-		} else {
-			System.out.println("waiting calls: "+ waitingCalls.size());
-			Call call = waitingCalls.remove();
+		} else if (!waitingCalls.isEmpty()) {
+			System.out.println("waiting calls: " + waitingCalls.size());
+			// Call call = waitingCalls.remove();
+			Call call = removeWaitingCalls();
 			callHandler(call);
 		}
+	}
+
+	private synchronized Call removeWaitingCalls() {
+		return waitingCalls.remove();
 	}
 
 	public void callHandler(Call call) {
@@ -73,7 +88,7 @@ public class Dispatcher {
 			dispatchCall(employee, call);
 		} catch (CallCenterException ex) {
 			ex.printStackTrace();
-			logger.info("adding waiting call "+ ex.getMessage());
+			System.out.println("adding waiting call " + ex.getMessage());
 			waitingCalls.add(call);
 		}
 	}

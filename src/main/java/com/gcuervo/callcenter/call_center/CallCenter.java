@@ -33,8 +33,12 @@ public class CallCenter {
 		calls.add(new Call(9l));
 		calls.add(new Call(5l));
 		calls.add(new Call(5l));
+		calls.add(new Call(5l));
+		calls.add(new Call(5l));
+		calls.add(new Call(5l));
+		calls.add(new Call(5l));
 		dispatcher.addCalls(calls);
-		dispatcher.employ(1, 2, 6);
+		dispatcher.employ(1, 2, 3);
 		dispatcher.getToWork();
 	}
 
