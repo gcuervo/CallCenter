@@ -20,7 +20,7 @@ public abstract class Employee {
 
 	public void answerCall(Call call) {
 		try {
-			System.out.println(call.getIdCall());
+			System.out.println(call.getName());
 			sleep(call.getDuration());
 		} catch (InterruptedException e) {
 			e.printStackTrace();

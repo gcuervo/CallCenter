@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.logging.Logger;
 
 //import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;
@@ -17,9 +18,10 @@ import com.gcuervo.callcenter.exceptions.CallCenterException;
 public class Dispatcher {
 
 	private ExecutorService executor;
-	private ConcurrentLinkedQueue<Call> waitingCalls;
+	protected ConcurrentLinkedQueue<Call> waitingCalls;
 	private EmployeeBusiness employeeBusiness;
 	private ConcurrentLinkedQueue<Call> receiveCalls;
+	private Logger logger = Logger.getLogger(Dispatcher.class.getName());
 
 	// private Logger logger = LoggerFactory.getLogger(Dispatcher.class);
 
@@ -65,29 +67,28 @@ public class Dispatcher {
 		});
 	}
 
-	private void waitingCalls() {
+	private synchronized void waitingCalls() {
 		System.out.println("waitingCalls: " + waitingCalls.size());
 		System.out.println("receiveCalls: " + receiveCalls.size());
 		if (waitingCalls.isEmpty() && receiveCalls.isEmpty()) {
 			executor.shutdown();
 		} else if (!waitingCalls.isEmpty()) {
-			System.out.println("waiting calls: " + waitingCalls.size());
-			// Call call = waitingCalls.remove();
-			Call call = removeWaitingCalls();
+			 Call call = waitingCalls.remove();
+			//Call call = removeWaitingCalls();
 			callHandler(call);
 		}
 	}
 
-	private synchronized Call removeWaitingCalls() {
+	/*private synchronized Call removeWaitingCalls() {
 		return waitingCalls.remove();
-	}
+	}*/
 
 	public void callHandler(Call call) {
 		try {
 			Employee employee = employeeBusiness.getAvailableEmployee();
 			dispatchCall(employee, call);
 		} catch (CallCenterException ex) {
-			ex.printStackTrace();
+			logger.info(ex.getMessage());
 			System.out.println("adding waiting call " + ex.getMessage());
 			waitingCalls.add(call);
 		}
