@@ -67,7 +67,7 @@ public class Dispatcher {
 		});
 	}
 
-	private synchronized void waitingCalls() {
+	private  void waitingCalls() {
 		System.out.println("waitingCalls: " + waitingCalls.size());
 		System.out.println("receiveCalls: " + receiveCalls.size());
 		if (waitingCalls.isEmpty() && receiveCalls.isEmpty()) {
@@ -89,7 +89,7 @@ public class Dispatcher {
 			dispatchCall(employee, call);
 		} catch (CallCenterException ex) {
 			logger.info(ex.getMessage());
-			System.out.println("adding waiting call " + ex.getMessage());
+			System.out.println("Adding waiting call");
 			waitingCalls.add(call);
 		}
 	}

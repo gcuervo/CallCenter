@@ -24,9 +24,9 @@ public class CallCenter {
 		Dispatcher dispatcher = new Dispatcher(10);
 
 		List<Call> calls = new ArrayList<Call>();
-		calls.add(new Call(5l,"1"));
+		calls.add(new Call(7l,"1"));
 		calls.add(new Call(6l,"2"));
-		calls.add(new Call(20l,"3"));
+		calls.add(new Call(8l,"3"));
 		calls.add(new Call(8l,"4"));
 		calls.add(new Call(5l,"5"));
 		calls.add(new Call(1l,"6"));
