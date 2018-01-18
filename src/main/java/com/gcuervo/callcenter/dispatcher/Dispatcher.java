@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 import com.gcuervo.callcenter.call.Call;
@@ -18,6 +19,7 @@ public class Dispatcher {
 
 	private ExecutorService executor;
 	protected ConcurrentLinkedQueue<Call> waitingCalls;
+	//Cabeza de la cadena de responsabilidades
 	private EmployeeChain employeeChain;
 	private ConcurrentLinkedQueue<Call> receiveCalls;
 	private Logger logger = Logger.getLogger(Dispatcher.class.getName());
@@ -87,11 +89,21 @@ public class Dispatcher {
 		});
 	}
 
+	
+	/*
+	 * Deja de aceptar nuevas tareas y comienza a cerrar
+	 * 
+	 */
 	private synchronized void waitingCalls() {
 
 		if (waitingCalls.isEmpty() && receiveCalls.isEmpty()) {
 			logger.info("Fin del trabajo!");
 			executor.shutdown();
+			try {
+				executor.awaitTermination(3, TimeUnit.SECONDS);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		} else if (!waitingCalls.isEmpty()) {
 			Call call = waitingCalls.remove();
 			logger.info("Tomando llamada que se encontraba en espera..");
