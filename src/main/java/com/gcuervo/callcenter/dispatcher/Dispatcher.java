@@ -7,9 +7,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Logger;
 
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
-
 import com.gcuervo.callcenter.call.Call;
 import com.gcuervo.callcenter.empleados.Employee;
 import com.gcuervo.callcenter.empleados.handler.DirectorHandler;

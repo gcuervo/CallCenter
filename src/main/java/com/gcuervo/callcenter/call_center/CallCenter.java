@@ -34,10 +34,12 @@ public class CallCenter {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		Dispatcher dispatcher = new Dispatcher(10);
+		
+		CallCenter callCenter = new CallCenter(10);
+		callCenter.employ(1, 2, 7);
 
 		List<Call> calls = new ArrayList<Call>();
-		calls.add(new Call(1l, "1"));
+		calls.add(new Call(5l, "1"));
 		calls.add(new Call(6l, "2"));
 		calls.add(new Call(8l, "3"));
 		calls.add(new Call(10l, "4"));
@@ -55,9 +57,8 @@ public class CallCenter {
 		calls.add(new Call(7l, "16"));
 		calls.add(new Call(10l, "17"));
 		calls.add(new Call(5l, "18"));
-		dispatcher.addCalls(calls);
-		dispatcher.employ(1, 2, 7);
-		dispatcher.getToWork();
+		
+		callCenter.startWork(calls);
 	}
 
 }

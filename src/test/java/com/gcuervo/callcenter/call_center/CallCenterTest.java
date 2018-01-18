@@ -4,11 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import com.gcuervo.callcenter.call.Call;
-import static java.lang.Thread.sleep;
+
 import junit.framework.TestCase;
 
 /**
@@ -41,7 +40,6 @@ public class CallCenterTest extends TestCase {
 			testCalls.add(new Call("Llamada " + i));
 		}
 
-		// callCenter.addCalls(testCalls);
 		callCenter.employ(1, 2, 7);
 		testCalls = callCenter.startWork(testCalls);
 		
